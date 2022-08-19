@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   const [gameBoard, setGameBoard] = useState(Array(9).fill(null));
-  const [isXNext, setIsXNext] = useState(true);
+  const [isXNext, setIsXNext] = useState("X");
  
 let boxIndex = [
   [0, 1, 2],
@@ -17,35 +17,37 @@ let boxIndex = [
   [2, 4, 6]
 ]
 
-  const handleClick = (index: number) => {
-    const newGameBoard = [...gameBoard];
-    newGameBoard[index] = isXNext ? 'X' : 'O';
-    setGameBoard(newGameBoard);
-    setIsXNext(!isXNext);
-  }
 
   
-    for (let i = 0; i < boxIndex.length; i++) {
-      const [a, b, c] = boxIndex[i];
+    for (let item = 0; item< boxIndex.length; item++) {
+      const [a, b, c] = boxIndex[item];
       if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
-        return gameBoard[a];
+        alert(`${gameBoard[a]} wins!`);
       }
   
+      
+  const handleClick = (index: number) => {
+    let isXNext2 = isXNext === "X" ? "O" : "X";
+    setIsXNext(isXNext2);
+     newState[index] = isXNext2;
+    setGameBoard (newState);
+  }
+  const newState= structuredClone(gameBoard);
 
 
 
   return (
     <div className="App">
     <h1>Tic-Tac-Toe</h1>
-    { isXNext ? <h2>X's Turn</h2> : <h2>O's Turn</h2> }
+    { isXNext === "O" ? <h2>X's Turn</h2> : <h2>O's Turn</h2> }
     <div className="game-board">
-      {gameBoard.map((i, index) => (
+      {gameBoard.map((item, index) => (
         <div
       className='box'
     key={index}
-    onClick={() => {handleClick(index);}}
+    onClick={() => handleClick(index)}
     >
-          {i}
+          {item}
 
         </div>
       ))}
